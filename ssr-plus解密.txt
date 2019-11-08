@@ -1,3 +1,3 @@
 echo 0xDEADBEEF > /etc/config/google_fu_mode
 
-最新版已无需使用
+鏈�鏂扮増鏃犻渶浣跨敤涓婅堪浠ｇ爜
