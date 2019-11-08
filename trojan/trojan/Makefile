@@ -66,20 +66,15 @@ define Package/trojan
 	CATEGORY:=Network
 	TITLE:=An unidentifiable mechanism that helps you bypass GFW
 	URL:=https://github.com/trojan-gfw/trojan
-	DEPENDS:=+libpthread +libstdcpp \
+	DEPENDS:=+libpthread +libstdcpp +ca-certificates \
 		+boost +boost-system +boost-program_options +boost-date_time
 endef
 
 
 
 define Package/trojan/install
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/trojan $(1)/usr/sbin/trojan
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_DATA) ./files/trojan.config $(1)/etc/config/trojan
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/trojan.init $(1)/etc/init.d/trojan
-	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/trojan/config.json $(1)/etc/trojan.json
+	$(INSTALL_DIR) $(1)/usr/bin/trojan
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/trojan $(1)/usr/bin/trojan/trojan
 endef
 
 
