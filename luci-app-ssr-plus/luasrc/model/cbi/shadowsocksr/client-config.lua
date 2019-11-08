@@ -127,6 +127,9 @@ end
 if nixio.fs.access("/usr/bin/v2ray/v2ray") then
 o:value("v2ray", translate("V2Ray"))
 end
+if nixio.fs.access("/usr/bin/trojan/trojan") then
+o:value("trojan", translate("trojan"))
+end
 o.description = translate("Using incorrect encryption mothod may causes service fail to start")
 
 o = s:option(Value, "alias", translate("Alias(optional)"))
@@ -149,6 +152,7 @@ o.password = true
 o.rmempty = true
 o:depends("type", "ssr")
 o:depends("type", "ss")
+o:depends("type", "trojan")
 
 o = s:option(ListValue, "encrypt_method", translate("Encrypt Method"))
 for _, v in ipairs(encrypt_methods) do o:value(v) end
@@ -351,6 +355,7 @@ o.rmempty = true
 o.default = "0"
 o:depends("type", "ssr")
 o:depends("type", "ss")
+o:depends("type", "trojan")
 
 o = s:option(Flag, "switch_enable", translate("Enable Auto Switch"))
 o.rmempty = false

@@ -125,6 +125,9 @@ EOF
       elif [ "$stype" == "v2ray" ] ;then
         lua /usr/share/shadowsocksr/genv2config.lua $GLOBAL_SERVER tcp $(uci_get_by_name $1 local_port) > /var/etc/v2-ssr-retcp.json
         sed -i 's/\\//g' /var/etc/v2-ssr-retcp.json
+      elif [ "$stype" == "trojan" ] ;then
+        lua /usr/share/shadowsocksr/trojanconfig.lua $GLOBAL_SERVER tcp $(uci_get_by_name $1 local_port) > /var/etc/trojan-ssr-retcp.json
+        sed -i 's/\\//g' /var/etc/trojan-ssr-retcp.json
 fi
 }
 
@@ -301,6 +304,8 @@ start_redir() {
         sscmd="/usr/bin/ssr-redir"
        elif [ "$stype" == "v2ray" ] ;then
         sscmd="/usr/bin/v2ray/v2ray"
+       elif [ "$stype" == "trojan" ] ;then
+        sscmd="/usr/bin/trojan/trojan"
     fi
 		
 	local utype=$(uci_get_by_name $UDP_RELAY_SERVER type)
@@ -310,6 +315,8 @@ start_redir() {
         ucmd="/usr/bin/ssr-redir"
        elif [ "$utype" == "v2ray" ] ;then
         ucmd="/usr/bin/v2ray/v2ray"
+       elif [ "$stype" == "trojan" ] ;then
+        ucmd="/usr/bin/trojan/trojan"
      fi
   
   if [ "$(uci_get_by_type global threads 0)" = "0" ] ;then
@@ -330,6 +337,9 @@ start_redir() {
   elif [ "$stype" == "v2ray" ] ;then
     $sscmd -config /var/etc/v2-ssr-retcp.json >/dev/null 2>&1 &
     echo "$(date "+%Y-%m-%d %H:%M:%S") $($sscmd -version | head -1) Started!" >> /tmp/ssrplus.log
+  elif [ "$stype" == "trojan" ] ;then
+    $sscmd -c /var/etc/trojan-ssr-retcp.json >/dev/null 2>&1 &
+    echo "$(date "+%Y-%m-%d %H:%M:%S") Trojan Started!" >> /tmp/ssrplus.log
 	fi
 	
 	if [ -n "$UDP_RELAY_SERVER" ] ;then
@@ -346,7 +356,11 @@ start_redir() {
     elif [ "$utype" == "v2ray" ] ; then
         lua /usr/share/shadowsocksr/genv2config.lua $UDP_RELAY_SERVER udp $(uci_get_by_name $UDP_RELAY_SERVER local_port) > /var/etc/v2-ssr-reudp.json
         sed -i 's/\\//g' /var/etc/v2-ssr-reudp.json
-        $ucmd -config /var/etc/v2-ssr-reudp.json >/dev/null 2>&1 &   
+        $ucmd -config /var/etc/v2-ssr-reudp.json >/dev/null 2>&1 & 
+   elif [ "$utype" == "trojan" ] ; then
+        lua /usr/share/shadowsocksr/trojanconfig.lua $UDP_RELAY_SERVER udp $(uci_get_by_name $UDP_RELAY_SERVER local_port) > /var/etc/trojan-ssr-reudp.json
+        sed -i 's/\\//g' /var/etc/trojan-ssr-reudp.json
+        $ucmd -c /var/etc/trojan-ssr-reudp.json >/dev/null 2>&1 &  
     fi
    fi
 
@@ -539,6 +553,7 @@ stop() {
 	killall -q -9 ss-redir
 	killall -q -9 ssr-redir
 	killall -q -9 v2ray
+        killall -q -9 trojan
 	killall -q -9 ssr-server
 	killall -q -9 kcptun-client
 	killall -q -9 ssr-local
