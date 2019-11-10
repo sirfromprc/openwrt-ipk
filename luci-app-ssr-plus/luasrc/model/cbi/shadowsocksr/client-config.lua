@@ -154,6 +154,12 @@ o:depends("type", "ssr")
 o:depends("type", "ss")
 o:depends("type", "trojan")
 
+o = s:option(Flag, "certificate", translate("certificate"))
+o.rmempty = true
+o.default = "0"
+o:depends("type", "trojan")
+o.description = translate("If you have a self-signed certificate,please manually upload the certificate to /etc/ssl/cert.cer")
+
 o = s:option(ListValue, "encrypt_method", translate("Encrypt Method"))
 for _, v in ipairs(encrypt_methods) do o:value(v) end
 o.rmempty = true
