@@ -378,7 +378,7 @@ msgid "GFW List"
 msgstr "GFW列表"
 
 msgid "ShadowSocksR Plus+ Settings"
-msgstr "ShadowSocksR Plus+ 设置（支持SS/SSR/V2RAY）"
+msgstr "ShadowSocksR Plus+ 设置（支持SS/SSR/V2RAY/TROJAN）"
 
 msgid "Main Server"
 msgstr "主服务器"
@@ -530,5 +530,17 @@ msgstr "更新所有订阅服务器节点"
 msgid "certificate"
 msgstr "自签证书"
 
-msgid "If you have a self-signed certificate,please manually upload the certificate to /etc/ssl/cert.cer"
-msgstr "如果你使用自签证书，请手工上传证书，路径证书名：/etc/ssl/cert.cer"
+msgid "If you have a self-signed certificate,please check the box"
+msgstr "如果你使用自签证书，请选择"
+
+msgid "upload"
+msgstr "上传证书"
+
+msgid "No specify upload file."
+msgstr "没有上传证书"
+
+msgid "current certificate path"
+msgstr "当前证书路径"
+
+msgid "Please confirm the current certificate path"
+msgstr "请选择确认所传证书，证书不正确将无法运行"

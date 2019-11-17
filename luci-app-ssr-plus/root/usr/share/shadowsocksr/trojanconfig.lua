@@ -20,7 +20,7 @@ local trojan = {
     ssl = {
         verify = true,
         verify_hostname = true,
-        cert = (server.certificate == "1") and "/etc/ssl/cert.cer" or "",
+        cert = (server.certificate == "1") and server.certpath or "",
         cipher = "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256",
         sni = "",
         alpn = {
